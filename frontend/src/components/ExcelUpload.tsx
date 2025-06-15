@@ -55,7 +55,7 @@ const ExcelUpload: React.FC<ExcelUploadProps> = ({ onFileChange, label, onBacken
   };
 
   return (
-    <Card elevation={3} sx={{ borderRadius: 3, p: 2, background: '#f9fafb', height: '100%' }}>
+    <Card elevation={3} sx={{ borderRadius: 3, p: 2, background: '#f9fafb', height: '100%', minWidth: 320, maxWidth: 480, width: 400, boxSizing: 'border-box', margin: '0 auto' }}>
       <CardContent>
         <Grid container alignItems="center" spacing={2}>
           <Grid item xs={12}>
@@ -77,7 +77,11 @@ const ExcelUpload: React.FC<ExcelUploadProps> = ({ onFileChange, label, onBacken
           </Grid>
           {fileName && (
             <Grid item xs={12}>
-              <Typography variant="body2" sx={{ mt: 1, color: '#64748b', wordBreak: 'break-all' }}>
+              <Typography
+                variant="body2"
+                sx={{ mt: 1, color: '#64748b', wordBreak: 'break-all', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 320, cursor: 'pointer' }}
+                title={fileName}
+              >
                 {fileName}
               </Typography>
             </Grid>
