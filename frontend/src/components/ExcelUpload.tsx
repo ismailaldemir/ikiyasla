@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Button, Box } from '@mui/material';
 import * as XLSX from 'xlsx';
 
 interface ExcelUploadProps {
@@ -55,14 +55,17 @@ const ExcelUpload: React.FC<ExcelUploadProps> = ({ onFileChange, label, onBacken
   };
 
   return (
-    <Card elevation={3} sx={{ borderRadius: 3, p: 2, background: '#f9fafb', height: '100%', minWidth: 320, maxWidth: 480, width: 400, boxSizing: 'border-box', margin: '0 auto' }}>
+    <Card elevation={3} sx={{ borderRadius: 3, p: 2, background: '#f9fafb', height: '100%', minWidth: 320, maxWidth: 480, width: 400, boxSizing: 'border-box', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <CardContent>
-        <Grid container alignItems="center" spacing={2}>
+        <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+          {label}
+        </Typography>
+        <Grid container alignItems="center" spacing={2} sx={{ width: '100%' }}>
           <Grid item xs={12}>
             <Button
               variant="contained"
               component="label"
-              sx={{ textTransform: 'none', borderRadius: 2 }}
+              sx={{ textTransform: 'none', borderRadius: 2, width: '100%' }}
             >
               Dosya Seç
               <input
@@ -77,12 +80,8 @@ const ExcelUpload: React.FC<ExcelUploadProps> = ({ onFileChange, label, onBacken
           </Grid>
           {fileName && (
             <Grid item xs={12}>
-              <Typography
-                variant="body2"
-                sx={{ mt: 1, color: '#64748b', wordBreak: 'break-all', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 320, cursor: 'pointer' }}
-                title={fileName}
-              >
-                {fileName}
+              <Typography variant="body2" sx={{ mt: 1, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }} title={fileName}>
+                Seçilen Dosya: {fileName}
               </Typography>
             </Grid>
           )}
