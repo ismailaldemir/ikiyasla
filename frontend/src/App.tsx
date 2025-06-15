@@ -313,20 +313,20 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <Box sx={{ maxWidth: 900, margin: '32px auto 24px auto' }}>
+      <Box sx={{ maxWidth: 1100, margin: '32px auto 24px auto' }}>
         <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#fff' }}>
-          <Typography variant="h5" fontWeight={800} align="center" color="#1e293b">
+          <Typography variant="h4" fontWeight={900} align="center" color="#1e293b">
             Excel Karşılaştırma Uygulaması
           </Typography>
         </Card>
       </Box>
-      <Grid container spacing={3} justifyContent="center" alignItems="flex-start" sx={{ maxWidth: '1600px', margin: '0 auto' }}>
-        {/* Önceki Excel Dosyası ve ayarları */}
-        <Grid item xs={12} md={6}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Card className="card">
-              <CardContent>
-                <Typography variant="subtitle1" fontWeight={700} gutterBottom>Önceki Excel Dosyası</Typography>
+      {/* Önceki Excel Dosyası ve ayarları tek kartta */}
+      <Box sx={{ maxWidth: 1100, margin: '0 auto 32px auto', width: '100%' }}>
+        <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#f9fafb', width: '100%' }}>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} gutterBottom>Önceki Excel Dosyası</Typography>
+            <Grid container spacing={3} alignItems="flex-start">
+              <Grid item xs={12} md={4}>
                 <ExcelUpload
                   onFileChange={handleFile1}
                   fileName={fileName1}
@@ -353,10 +353,8 @@ const App: React.FC = () => {
                     </select>
                   </Box>
                 )}
-              </CardContent>
-            </Card>
-            <Card className="card">
-              <CardContent>
+              </Grid>
+              <Grid item xs={12} md={8}>
                 <FormGroup row>
                   <FormControlLabel
                     control={<Checkbox checked={showPreview1} onChange={handleShowPreview1} />}
@@ -382,16 +380,18 @@ const App: React.FC = () => {
                   </Grid>
                 </Grid>
                 {showPreview1 && previewTable1}
-              </CardContent>
-            </Card>
-          </Box>
-        </Grid>
-        {/* Güncel Excel Dosyası ve ayarları */}
-        <Grid item xs={12} md={6}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Card className="card">
-              <CardContent>
-                <Typography variant="subtitle1" fontWeight={700} gutterBottom>Güncel Excel Dosyası</Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Box>
+      {/* Güncel Excel Dosyası ve ayarları tek kartta */}
+      <Box sx={{ maxWidth: 1100, margin: '0 auto 32px auto', width: '100%' }}>
+        <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#f9fafb', width: '100%' }}>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} gutterBottom>Güncel Excel Dosyası</Typography>
+            <Grid container spacing={3} alignItems="flex-start">
+              <Grid item xs={12} md={4}>
                 <ExcelUpload
                   onFileChange={handleFile2}
                   fileName={fileName2}
@@ -418,10 +418,8 @@ const App: React.FC = () => {
                     </select>
                   </Box>
                 )}
-              </CardContent>
-            </Card>
-            <Card className="card">
-              <CardContent>
+              </Grid>
+              <Grid item xs={12} md={8}>
                 <FormGroup row>
                   <FormControlLabel
                     control={<Checkbox checked={showPreview2} onChange={handleShowPreview2} />}
@@ -447,11 +445,11 @@ const App: React.FC = () => {
                   </Grid>
                 </Grid>
                 {showPreview2 && previewTable2}
-              </CardContent>
-            </Card>
-          </Box>
-        </Grid>
-      </Grid>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Box>
       <div className="mt-8 flex flex-col items-center">
         <Box sx={{ mb: 3 }}>
           <Card elevation={2} sx={{ borderRadius: 3, p: 2, background: '#fff' }}>
