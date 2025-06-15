@@ -313,7 +313,13 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="title">Excel Karşılaştırma Uygulaması</div>
+      <Box sx={{ maxWidth: 900, margin: '32px auto 24px auto' }}>
+        <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#fff' }}>
+          <Typography variant="h5" fontWeight={800} align="center" color="#1e293b">
+            Excel Karşılaştırma Uygulaması
+          </Typography>
+        </Card>
+      </Box>
       <Grid container spacing={3} justifyContent="center" alignItems="flex-start" sx={{ maxWidth: '1600px', margin: '0 auto' }}>
         {/* Önceki Excel Dosyası ve ayarları */}
         <Grid item xs={12} md={6}>
