@@ -351,8 +351,8 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <Box sx={{ maxWidth: 1100, margin: '32px auto 24px auto' }}>
-        <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#fff' }}>
+      <Box sx={{ maxWidth: 1100, margin: '32px auto 24px auto', width: '100%' }}>
+        <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#fff', width: '100%' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography variant="h4" fontWeight={900} align="center" color="#1e293b">
               Excel Karşılaştırma Uygulaması
@@ -363,14 +363,14 @@ const App: React.FC = () => {
       {/* Önceki Excel Dosyası ve ayarları tek kartta */}
       <Box sx={{ maxWidth: 1100, margin: '0 auto 32px auto', width: '100%' }}>
         <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#f9fafb', width: '100%' }}>
-          <CardContent>
+          <CardContent sx={{ width: '100%', boxSizing: 'border-box' }}>
             <Typography variant="subtitle1" fontWeight={700} gutterBottom>
               Önceki Excel Dosyası
             </Typography>
             <Grid container spacing={3} alignItems="flex-start">
-              <Grid item xs={12} md={6}>
-                {/* Dosya seçimi kartı tekrar eklendi */}
-                <Card className="card" sx={{ minWidth: 320, maxWidth: 480, width: 400, boxSizing: 'border-box', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Grid item xs={12} md={3}>
+                {/* Dosya seçimi kartı daha dar */}
+                <Card className="card" sx={{ minWidth: 180, maxWidth: 260, width: 220, boxSizing: 'border-box', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <CardContent>
                     <Button
                       variant="contained"
@@ -389,20 +389,18 @@ const App: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12} md={6}>
-                {/* Ayar kartı */}
-                <Card className="card">
-                  <CardContent>
+              <Grid item xs={12} md={9}>
+                <Card className="card" sx={{ width: '100%', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
+                  <CardContent sx={{ width: '100%', boxSizing: 'border-box' }}>
                     {fileName1 && (
-                      <Typography variant="body2" sx={{ mb: 1, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }} title={fileName1}>
+                      <Typography variant="body2" sx={{ mb: 1, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%', display: 'block' }} title={fileName1}>
                         Seçilen Dosya: {fileName1}
                       </Typography>
                     )}
-                    {/* Sayfa seçimi combosu */}
                     {sheetNames1.length > 1 && (
                       <Box sx={{ mb: 2 }}>
                         <Typography variant="subtitle2" fontWeight={600} sx={{ mr: 1 }}>Sayfa Seçimi:</Typography>
-                        <select value={selectedSheet1} onChange={e => setSelectedSheet1(e.target.value)} style={{ minWidth: 160, maxWidth: 220, padding: '6px 10px', borderRadius: 6, border: '1px solid #bfc8d6', fontSize: '1rem' }}>
+                        <select value={selectedSheet1} onChange={e => setSelectedSheet1(e.target.value)} style={{ minWidth: 120, maxWidth: 180, padding: '6px 10px', borderRadius: 6, border: '1px solid #bfc8d6', fontSize: '1rem' }}>
                           {sheetNames1.map(name => (
                             <option key={name} value={name}>{name}</option>
                           ))}
@@ -416,27 +414,35 @@ const App: React.FC = () => {
                       />
                     </FormGroup>
                     <Grid container spacing={2} alignItems="center" sx={{ mt: 1 }}>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Başlık Satırı:</Typography>
-                        <Box className="combo-fixed">
-                          <select value={headerRow1} onChange={e => setHeaderRow1(Number(e.target.value))} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            {preview1.map((row, i) => (
-                              <option key={i} value={i}>{i + 1}. satır</option>
-                            ))}
-                          </select>
+                      {/* İlk satır: Başlık Satırı ve Kod */}
+                      <Grid item xs={12} sm={6} md={6}>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Başlık Satırı:</Typography>
+                            <select value={headerRow1} onChange={e => setHeaderRow1(Number(e.target.value))} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                              {preview1.map((row, i) => (
+                                <option key={i} value={i}>{i + 1}. satır</option>
+                              ))}
+                            </select>
+                          </Box>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Kod Sütunu:</Typography>
+                            {codeColSelect1}
+                          </Box>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Kod Sütunu:</Typography>
-                        <Box className="combo-fixed">{codeColSelect1}</Box>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Fiyat Sütunu:</Typography>
-                        <Box className="combo-fixed">{priceColSelect1}</Box>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Ad Sütunu:</Typography>
-                        <Box className="combo-fixed">{nameColSelect1}</Box>
+                      {/* İkinci satır: Fiyat ve Ad */}
+                      <Grid item xs={12} sm={6} md={6}>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Fiyat Sütunu:</Typography>
+                            {priceColSelect1}
+                          </Box>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Ad Sütunu:</Typography>
+                            {nameColSelect1}
+                          </Box>
+                        </Box>
                       </Grid>
                     </Grid>
                     {showPreview1 && previewTable1}
@@ -450,14 +456,13 @@ const App: React.FC = () => {
       {/* Güncel Excel Dosyası ve ayarları tek kartta */}
       <Box sx={{ maxWidth: 1100, margin: '0 auto 32px auto', width: '100%' }}>
         <Card elevation={3} sx={{ borderRadius: 3, p: 3, background: '#f9fafb', width: '100%' }}>
-          <CardContent>
+          <CardContent sx={{ width: '100%', boxSizing: 'border-box' }}>
             <Typography variant="subtitle1" fontWeight={700} gutterBottom>
               Güncel Excel Dosyası
             </Typography>
             <Grid container spacing={3} alignItems="flex-start">
-              <Grid item xs={12} md={6}>
-                {/* Dosya seçimi kartı tekrar eklendi */}
-                <Card className="card" sx={{ minWidth: 320, maxWidth: 480, width: 400, boxSizing: 'border-box', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Grid item xs={12} md={3}>
+                <Card className="card" sx={{ minWidth: 180, maxWidth: 260, width: 220, boxSizing: 'border-box', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <CardContent>
                     <Button
                       variant="contained"
@@ -476,20 +481,18 @@ const App: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12} md={6}>
-                {/* Ayar kartı */}
-                <Card className="card">
-                  <CardContent>
+              <Grid item xs={12} md={9}>
+                <Card className="card" sx={{ width: '100%', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}>
+                  <CardContent sx={{ width: '100%', boxSizing: 'border-box' }}>
                     {fileName2 && (
-                      <Typography variant="body2" sx={{ mb: 1, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }} title={fileName2}>
+                      <Typography variant="body2" sx={{ mb: 1, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%', display: 'block' }} title={fileName2}>
                         Seçilen Dosya: {fileName2}
                       </Typography>
                     )}
-                    {/* Sayfa seçimi combosu */}
                     {sheetNames2.length > 1 && (
                       <Box sx={{ mb: 2 }}>
                         <Typography variant="subtitle2" fontWeight={600} sx={{ mr: 1 }}>Sayfa Seçimi:</Typography>
-                        <select value={selectedSheet2} onChange={e => setSelectedSheet2(e.target.value)} style={{ minWidth: 160, maxWidth: 220, padding: '6px 10px', borderRadius: 6, border: '1px solid #bfc8d6', fontSize: '1rem' }}>
+                        <select value={selectedSheet2} onChange={e => setSelectedSheet2(e.target.value)} style={{ minWidth: 120, maxWidth: 180, padding: '6px 10px', borderRadius: 6, border: '1px solid #bfc8d6', fontSize: '1rem' }}>
                           {sheetNames2.map(name => (
                             <option key={name} value={name}>{name}</option>
                           ))}
@@ -503,27 +506,33 @@ const App: React.FC = () => {
                       />
                     </FormGroup>
                     <Grid container spacing={2} alignItems="center" sx={{ mt: 1 }}>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Başlık Satırı:</Typography>
-                        <Box className="combo-fixed">
-                          <select value={headerRow2} onChange={e => setHeaderRow2(Number(e.target.value))} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            {preview2.map((row, i) => (
-                              <option key={i} value={i}>{i + 1}. satır</option>
-                            ))}
-                          </select>
+                      <Grid item xs={12} sm={6} md={6}>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Başlık Satırı:</Typography>
+                            <select value={headerRow2} onChange={e => setHeaderRow2(Number(e.target.value))} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                              {preview2.map((row, i) => (
+                                <option key={i} value={i}>{i + 1}. satır</option>
+                              ))}
+                            </select>
+                          </Box>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Kod Sütunu:</Typography>
+                            {codeColSelect2}
+                          </Box>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Kod Sütunu:</Typography>
-                        <Box className="combo-fixed">{codeColSelect2}</Box>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Fiyat Sütunu:</Typography>
-                        <Box className="combo-fixed">{priceColSelect2}</Box>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="subtitle2" fontWeight={600}>Ad Sütunu:</Typography>
-                        <Box className="combo-fixed">{nameColSelect2}</Box>
+                      <Grid item xs={12} sm={6} md={6}>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Fiyat Sütunu:</Typography>
+                            {priceColSelect2}
+                          </Box>
+                          <Box sx={{ flex: 1, minWidth: 120, maxWidth: 180 }}>
+                            <Typography variant="subtitle2" fontWeight={600}>Ad Sütunu:</Typography>
+                            {nameColSelect2}
+                          </Box>
+                        </Box>
                       </Grid>
                     </Grid>
                     {showPreview2 && previewTable2}
